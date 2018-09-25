@@ -26,8 +26,9 @@ public class NewUserDemo {
 		driver.findElement(By.linkText("Create Account".toUpperCase())).click();
 
 		// Enter information
-		// Normal field elements
+		// Normal textfield elements
 
+		// Convert double to string
 		driver.findElement(By.name("ctl00$MainContent$txtHomePhone")).sendKeys(String.valueOf(phoneNumber));
 
 		// Radio button
@@ -62,5 +63,6 @@ public class NewUserDemo {
 			}
 		}
 	}
+	
 
 }

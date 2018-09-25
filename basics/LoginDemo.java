@@ -24,6 +24,8 @@ public class LoginDemo {
 		
 		// Click login
 		driver.findElement(By.id("MainContent_btnLogin")).click();
+		
+		// Validate
 	}
 
 }

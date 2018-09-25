@@ -9,7 +9,7 @@ public class LoginVerification {
 
 	public static void main(String[] args) {
 		String email = "bademail@testemail.com";
-		String resultMessage = "Invalid user name, try again!";
+		String resultMessage = "Invalid User name, try again!";
 		
 		// Setup browser
 		System.setProperty("webdriver.gecko.driver", "C:\\DealerTrackTraining\\2018\\Software\\geckodriver.exe");
@@ -42,7 +42,7 @@ public class LoginVerification {
 		*/
 		
 		// Method 3: Get page source
-		if (driver.getPageSource().contains(resultMessage)) {
+		if (driver.getPageSource().toLowerCase().contains(resultMessage.toLowerCase())) {
 			System.out.println("TEST PASSED");
 		} else {
 			System.out.println("TEST FAILED");
