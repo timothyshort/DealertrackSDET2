@@ -8,13 +8,13 @@ import utilities.DriverFactory;
 public class LoginDDT {
 
 	public static void main(String[] args) {
-		String[] emails = { "tim@testemail.com", "bademail@mail.com", "montyscorp@gmail.com" };
-		String[] passwords = { "password", "password", "Password1@" };
+		String[] emails = { "montyscorp@gmail.com", "bademail@mail.com", "tim@testemail.com" };
+		String[] passwords = { "Password1@", "password", "password"  };
 		String[] expectedOutcome = { "pass", "fail", "pass" };
-		String[] browserType = { "chrome", "IE", "Firefox" };
+		String[] browserType = { "firefox", "firefox", "Firefox" };
 		String url = "http://sdettraining.com/trguitransactions/AccountManagement.aspx";
 		String successMessage = "Logged in successfully";
-		String failedMessage = "Invalid user name";
+		String failedMessage = "Invalid";
 		
 		// For loop to iterate through records
 		for (int i=0; i<emails.length; i++) {
