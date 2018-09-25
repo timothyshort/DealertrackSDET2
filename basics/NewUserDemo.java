@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import utilities.Checkbox;
+
 public class NewUserDemo {
 
 	public static void main(String[] args) {
@@ -12,9 +14,9 @@ public class NewUserDemo {
 		String country = "Canada";
 		String gender = "male";
 		double phoneNumber = 888999;
-		boolean weeklyEmail = true;
-		boolean monthlyEmail = false;
-		boolean occasionalEmail = false;
+		boolean weeklyEmail = false;
+		boolean monthlyEmail = true;
+		boolean occasionalEmail = true;
 
 		System.setProperty("webdriver.gecko.driver", "C:\\DealerTrackTraining\\2018\\Software\\geckodriver.exe");
 		WebDriver driver = new FirefoxDriver();
@@ -42,9 +44,9 @@ public class NewUserDemo {
 		new Select(driver.findElement(By.id("MainContent_menuCountry"))).selectByVisibleText(country);
 
 		// Checkbox
-		selectCheckbox(weeklyEmail, By.id("MainContent_checkWeeklyEmail"), driver);
-		selectCheckbox(monthlyEmail, By.id("MainContent_checkMonthlyEmail"), driver);
-		selectCheckbox(occasionalEmail, By.id("MainContent_checkUpdates"), driver);
+		Checkbox.selectCheckbox(weeklyEmail, By.id("MainContent_checkWeeklyEmail"), driver);
+		Checkbox.selectCheckbox(monthlyEmail, By.id("MainContent_checkMonthlyEmail"), driver);
+		Checkbox.selectCheckbox(occasionalEmail, By.id("MainContent_checkUpdates"), driver);
 
 		// Click submit
 
@@ -52,7 +54,7 @@ public class NewUserDemo {
 	}
 
 	// checkbox algorithm function
-	private static void selectCheckbox(boolean checkbox, By checkboxElement, WebDriver driver) {
+	private static void chooseCheckbox(boolean checkbox, By checkboxElement, WebDriver driver) {
 		if (checkbox) {
 			if (!driver.findElement(checkboxElement).isSelected()) {
 				driver.findElement(checkboxElement).click();
