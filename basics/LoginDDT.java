@@ -1,9 +1,16 @@
 package basics;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import utilities.DriverFactory;
+import utilities.Screenshot;
 
 public class LoginDDT {
 
@@ -43,9 +50,11 @@ public class LoginDDT {
 			// Verification
 			if (driver.getPageSource().contains(message)) {
 				System.out.println("TEST PASSED!");
+				Screenshot.capture(driver, "login", "pass", emails[i]);
 			}
 			else {
 				System.out.println("TEST FAILED!");
+				Screenshot.capture(driver, "login", "fail", emails[i]);
 			}
 			System.out.println("**********");
 			
