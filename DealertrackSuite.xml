@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Dealertrack" parallel="false">
+  <test name="SmokeTests">
+    <classes>
+      <class name="testframeworks.SampleTest"/>
+    </classes>
+  </test> <!-- Test -->
+  <test name="Functional Tests">
+    <classes>
+      <class name="testframeworks.TestNGDemo"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
+
+<!-- Exercise -->
+<!-- Add a second test, and rename the suite / test name appropriately -->
