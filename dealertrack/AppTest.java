@@ -1,10 +1,12 @@
 package dealertrack;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -46,6 +48,16 @@ public class AppTest {
 		System.out.println("  > Finished");
 		
 		FrameHandling.change(driver, 1);
+		
+		String dealNumber = "10302092";
+		
+		// Extract all deals
+		List<WebElement> deals = driver.findElements(By.xpath("//*[@id=\"divView3_datagridbody\"]/tr"));
+		for (WebElement deal : deals) {
+			System.out.println(deal.findElement(By.xpath("td[3]")).getText());
+			System.out.println(deal.findElement(By.xpath("td[9]")).getText());
+		}
+		
 	}
 	
 	
