@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -16,7 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class Data {
 	
 	// Read and return CSV data
-	public static ArrayList<String[]> getCSV(String csvFile) {
+	public static Iterator<String[]> getCSV(String csvFile) {
 		ArrayList<String[]> data = new ArrayList<String[]>();
 		System.out.println("Reading file ...");
 		
@@ -43,7 +44,7 @@ public class Data {
 			System.out.println("ERROR READING FILE!");
 		}
 		
-		return data;
+		return data.iterator();
 	}
 	
 	// Read and return Excel data (XLSX)

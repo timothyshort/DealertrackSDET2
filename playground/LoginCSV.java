@@ -18,6 +18,6 @@ public class LoginCSV {
 
   @DataProvider
   public Iterator<String[]> loginTestData() {
-    return Data.getCSV("C:\\DealerTrackTraining\\2018\\TestData\\LoginData.txt").iterator();
+    return Data.getCSV("C:\\DealerTrackTraining\\2018\\TestData\\LoginData.txt");
   }
 }
