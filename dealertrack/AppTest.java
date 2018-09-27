@@ -3,6 +3,7 @@ package dealertrack;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -14,7 +15,7 @@ public class AppTest {
 
 	public static void main(String[] args) throws InterruptedException {
 		// Launch browser
-		WebDriver driver = DriverFactory.get("firefox");
+		WebDriver driver = DriverFactory.get("chrome");
 		driver.get("https://uat.dealertrackcanada.com");
 		
 		// Define waits
@@ -43,13 +44,44 @@ public class AppTest {
 		new Select(driver.findElement(By.id("ddAsset"))).selectByVisibleText("Automotive");
 		wait.until(ExpectedConditions.presenceOfNestedElementsLocatedBy(By.id("ddLenders"), By.tagName("option")));
 		new Select(driver.findElement(By.id("ddLenders"))).selectByVisibleText("Hyundai Motor Finance");
-		wait.until(ExpectedConditions.presenceOfNestedElementsLocatedBy(By.id("ddProduct"), By.tagName("option")));
+		
+		Thread.sleep(3500);
 		new Select(driver.findElement(By.id("ddProduct"))).selectByVisibleText("Lease");
-		wait.until(ExpectedConditions.presenceOfNestedElementsLocatedBy(By.id("ddApplicantType"), By.tagName("option")));
+		Thread.sleep(3500);
 		new Select(driver.findElement(By.id("ddApplicantType"))).selectByVisibleText("Consumer");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("btnSave")));
+		Thread.sleep(3500);
 		driver.findElement(By.id("btnSave")).click();
 		System.out.println("  > Finished");
+		
+		// 4. Click Search under the applicants tab (Main Frame)
+		System.out.println("Searching for applicant...");
+		Thread.sleep(10000);
+		FrameHandling.change(driver, 1);
+		// wait.until(ExpectedConditions.elementToBeClickable(By.id("ctl19_ctl18_ctl00_btnLoad")));
+		driver.findElement(By.id("ctl19_ctl18_ctl00_btnLoad")).click();
+		driver.findElement(By.id("txtNameLookup")).sendKeys("hort");
+		driver.findElement(By.id("__input2")).click();
+		wait.until(ExpectedConditions.presenceOfNestedElementsLocatedBy(By.id("LoadApplicantSelect"), By.tagName("option")));
+		new Select(driver.findElement(By.id("LoadApplicantSelect"))).selectByIndex(0);
+		driver.findElement(By.id("DTC$ModalPopup$OK")).click();
+		Thread.sleep(5000);
+		
+		// 8-9. Update Address & Employment to 4 years
+		driver.findElement(By.id("ctl19_ctl21_ctl00_CDurationCurrentAddress_Y")).clear();
+		driver.findElement(By.id("ctl19_ctl21_ctl00_CDurationCurrentAddress_Y")).sendKeys("4");
+		driver.findElement(By.id("ctl19_ctl24_ctl00_CDurationCurrentEmployerAddress_Y")).clear();
+		driver.findElement(By.id("ctl19_ctl24_ctl00_CDurationCurrentEmployerAddress_Y")).sendKeys("4");
+		
+		// 10. Click on Worksheet
+		driver.findElement(By.id("ctl19_btnWORKSHEET")).click();
+		Thread.sleep(7000);
+		FrameHandling.change(driver, 1);
+		
+		// 11. Update Program Selection
+		try { new Select(driver.findElement(By.id("ctl00_ddlProgram"))).selectByVisibleText("PD - Sept Program "); }
+		catch (NoSuchElementException e) { new Select(driver.findElement(By.id("ctl00_ddlProgram"))).selectByVisibleText("PD - Sept Program"); }
+		driver.findElement(By.id("ctl00$txtMileage")).sendKeys("400");
+
 	}
 	
 }
