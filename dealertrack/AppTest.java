@@ -49,13 +49,26 @@ public class AppTest {
 		
 		FrameHandling.change(driver, 1);
 		
-		String dealNumber = "10302092";
+		String dealNumber = "10302915";
+		String[] validStatus = { "AD", "AP" };
 		
 		// Extract all deals
 		List<WebElement> deals = driver.findElements(By.xpath("//*[@id=\"divView3_datagridbody\"]/tr"));
 		for (WebElement deal : deals) {
 			System.out.println(deal.findElement(By.xpath("td[3]")).getText());
-			System.out.println(deal.findElement(By.xpath("td[9]")).getText());
+			String dealTable = deal.findElement(By.xpath("td[3]")).getText();
+			if (dealNumber.equals(dealTable)) {
+				// Extract validation photo image name from src attribute
+				String imageName = deal.findElement(By.xpath("td[9]")).getAttribute("src");
+				System.out.println(imageName);
+				for (String validImageName : validStatus) {
+					if (imageName.contains(validImageName)) {
+						System.out.println("DEAL STATUS APPROVED!");
+						break;
+					}
+				}
+				System.out.println("TEST FAILED");
+			}
 		}
 		
 	}
