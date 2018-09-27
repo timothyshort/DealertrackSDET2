@@ -6,6 +6,12 @@ import org.openqa.selenium.WebElement;
 
 public class FrameHandling {
 	
+	public static void change(WebDriver driver, int index) {
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(0);
+		driver.switchTo().frame(driver.findElement(By.tagName("frameset")).findElements(By.tagName("frame")).get(index));		
+	}
+	
 	
 	
 

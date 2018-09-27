@@ -1,9 +1,55 @@
 package dealertrack;
 
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import utilities.DriverFactory;
+
 public class AppTest {
 
 	public static void main(String[] args) throws InterruptedException {
+		// Launch browser
+		WebDriver driver = DriverFactory.get("firefox");
+		driver.get("https://uat.dealertrackcanada.com");
 		
+		// Define waits
+		driver.manage().timeouts().implicitlyWait(45, TimeUnit.SECONDS);
+		WebDriverWait wait = new WebDriverWait(driver, 20);
+		
+		// 1. Login as DIO user
+		Thread.sleep(3000);
+		System.out.println("Logging in...");
+		driver.findElements(By.name("username")).get(1).sendKeys("tshort");
+		driver.findElements(By.name("password")).get(1).sendKeys("test1234");
+		driver.findElement(By.id("_login")).click();
+		System.out.println("  > Finished");
+		
+		// 2. Click "Create App" link (Nav Frame)
+		System.out.println("Clicking Create App...");
+		FrameHandling.change(driver, 0);
+		driver.findElement(By.id("PrepareApp")).click();
+		System.out.println("  > Finished");
+		
+		
+		// 3. Fill out the New App form (Main Frame)
+		System.out.println("Filling out form...");
+		FrameHandling.change(driver, 1);
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("ddAsset")));
+		new Select(driver.findElement(By.id("ddAsset"))).selectByVisibleText("Automotive");
+		wait.until(ExpectedConditions.presenceOfNestedElementsLocatedBy(By.id("ddLenders"), By.tagName("option")));
+		new Select(driver.findElement(By.id("ddLenders"))).selectByVisibleText("Hyundai Motor Finance");
+		wait.until(ExpectedConditions.presenceOfNestedElementsLocatedBy(By.id("ddProduct"), By.tagName("option")));
+		new Select(driver.findElement(By.id("ddProduct"))).selectByVisibleText("Lease");
+		wait.until(ExpectedConditions.presenceOfNestedElementsLocatedBy(By.id("ddApplicantType"), By.tagName("option")));
+		new Select(driver.findElement(By.id("ddApplicantType"))).selectByVisibleText("Consumer");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("btnSave")));
+		driver.findElement(By.id("btnSave")).click();
+		System.out.println("  > Finished");
 	}
 	
 }
