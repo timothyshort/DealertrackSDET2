@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import utilities.Data;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.testng.annotations.DataProvider;
 
@@ -16,7 +17,7 @@ public class LoginCSV {
   }
 
   @DataProvider
-  public ArrayList<String[]> loginTestData() {
-    return Data.getCSV("C:\\DealerTrackTraining\\2018\\TestData\\LoginData.txt");
+  public Iterator<String[]> loginTestData() {
+    return Data.getCSV("C:\\DealerTrackTraining\\2018\\TestData\\LoginData.txt").iterator();
   }
 }
