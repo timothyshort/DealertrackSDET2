@@ -8,36 +8,57 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import utilities.DriverFactory;
 
 public class AppTest {
-
-	public static void main(String[] args) throws InterruptedException {
+	
+	WebDriver driver;
+	WebDriverWait wait;
+	
+	@BeforeMethod
+	public void setUp() throws InterruptedException {
 		// Launch browser
-		WebDriver driver = DriverFactory.get("chrome");
+		driver = DriverFactory.get("chrome");
 		driver.get("https://uat.dealertrackcanada.com");
 		
 		// Define waits
 		driver.manage().timeouts().implicitlyWait(45, TimeUnit.SECONDS);
-		WebDriverWait wait = new WebDriverWait(driver, 20);
+		wait = new WebDriverWait(driver, 20);
 		
-		// 1. Login as DIO user
+		// Login as DIO user
 		Thread.sleep(3000);
 		System.out.println("Logging in...");
 		driver.findElements(By.name("username")).get(1).sendKeys("tshort");
 		driver.findElements(By.name("password")).get(1).sendKeys("test1234");
 		driver.findElement(By.id("_login")).click();
 		System.out.println("  > Finished");
+	}
+	
+	@Test
+	public void checkDeal() {
+		// Click "Status" link (Nav Frame)
+		System.out.println("Clicking Status...");
+		FrameHandling.change(driver, 0);
+		driver.findElement(By.id("Status")).click();
+		System.out.println("  > Finished");
 		
-		// 2. Click "Create App" link (Nav Frame)
+		FrameHandling.change(driver, 1);
+	}
+	
+	
+
+	@Test(enabled=false)
+	public void submitDeal() throws InterruptedException {
+		// Click "Create App" link (Nav Frame)
 		System.out.println("Clicking Create App...");
 		FrameHandling.change(driver, 0);
 		driver.findElement(By.id("PrepareApp")).click();
 		System.out.println("  > Finished");
 		
-		
-		// 3. Fill out the New App form (Main Frame)
+		//  Fill out the New App form (Main Frame)
 		System.out.println("Filling out form...");
 		FrameHandling.change(driver, 1);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("ddAsset")));
@@ -78,8 +99,12 @@ public class AppTest {
 		FrameHandling.change(driver, 1);
 		
 		// 11. Update Program Selection
-		try { new Select(driver.findElement(By.id("ctl00_ddlProgram"))).selectByVisibleText("PD - Sept Program "); }
-		catch (NoSuchElementException e) { new Select(driver.findElement(By.id("ctl00_ddlProgram"))).selectByVisibleText("PD - Sept Program"); }
+		try {
+			new Select(driver.findElement(By.id("ctl00_ddlProgram"))).selectByVisibleText("PD - Sept Program ");
+		} catch (NoSuchElementException e) {
+			System.out.println(">> Program - NO SPACE");
+			new Select(driver.findElement(By.id("ctl00_ddlProgram"))).selectByVisibleText("PD - Sept Program");
+		}
 		driver.findElement(By.id("ctl00$txtMileage")).sendKeys("400");
 
 	}
